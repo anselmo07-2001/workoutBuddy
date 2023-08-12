@@ -1,35 +1,13 @@
 const express = require("express")
 const WorkoutModel = require("../models/workoutModel")
+const workoutController = require("../controller/workoutController")
 
 // /api/workouts
 const router = express.Router()
 
-router.get("/", (req,res) => {
-    res.json({
-        msg: "Get All workouts"
-    })
-
-})
-
-router.get("/:id", (req,res) => {
-    res.json({
-        msg:"Get workout"
-    })
-})
-
-router.post("/", async (req,res) => {
-    const { title, load, reps } = req.body
-
-    try {
-        const workout = await WorkoutModel.create({title,load,reps})
-        res.status(201).json(workout)
-    }
-    catch(err) {
-        console.log(err)
-        res.status(400).json({error: err.message})
-    }
-
-})
+router.get("/", workoutController.getWorkouts)
+router.get("/:id", workoutController.getWorkout)
+router.post("/", workoutController.createWorkout)
 
 router.patch("/:id", (req,res) => {
     res.json({
