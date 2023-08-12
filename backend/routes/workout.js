@@ -1,6 +1,5 @@
 const express = require("express")
 
-
 // /api/workouts
 const router = express.Router()
 
@@ -8,7 +7,7 @@ router.get("/", (req,res) => {
     res.json({
         msg: "Get All workouts"
     })
-    
+
 })
 
 router.get("/:id", (req,res) => {
