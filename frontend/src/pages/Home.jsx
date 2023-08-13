@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import WorkoutDetail from "../components/WorkoutDetail"
+import WorkoutForm from "../components/WorkoutForm"
 
 const Home = () => {
     const [workouts, setWorkouts] = useState(null)
@@ -18,9 +20,12 @@ const Home = () => {
 
 
     return (
-	    <>
-		   {workouts && workouts.map(workout => <p key={workout._id}>{workout.title}</p>)}
-		</>
+	    <div className="home">
+		   <div className="workouts">
+				{workouts && workouts.map(workout => <WorkoutDetail workout={workout}/>)}	
+			</div>
+			<WorkoutForm/>
+		</div>
 	)
 }
 

@@ -28,11 +28,11 @@ exports.createWorkout = async (req,res) => {
 
     try {
         const workout = await WorkoutModel.create({title,load,reps})
-        res.status(201).json(workout)
+        return res.status(201).json(workout)
     }
     catch(err) {
         console.log(err)
-        res.status(400).json({error: err.message})
+        return res.status(400).json({error: err.message})
     }
 
 }
