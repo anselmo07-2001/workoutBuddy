@@ -6,16 +6,19 @@ const WorkoutForm = () => {
 	const [load, setLoad] = useState("")
 	const [reps, setReps] = useState("")
 	const [errMsg, setError] = useState(null)
-	const [addWorkouts, result] = useAddWorkoutsMutation()
+	const [isLoading, setIsLoading] = useState(false)
 
+	const [addWorkouts, result] = useAddWorkoutsMutation()
 	
 	const handleSubmit = async(e) => {
 		e.preventDefault()
+		setIsLoading(true)
 		
 		const workout = {title, load, reps}
 		const res = await addWorkouts(workout)
 
 		if (res.error) {
+			setIsLoading(false)
 			return setError(res.error.data.error)
 		}
 
@@ -23,6 +26,7 @@ const WorkoutForm = () => {
 		setTitle("")
 		setLoad("")
 		setReps("")
+		setIsLoading(false)
 	}
 	
 	return (
@@ -37,7 +41,9 @@ const WorkoutForm = () => {
 			<label>Repetitions:</label>
 			<input type="number" onChange={(e) => setReps(e.target.value)} value={reps} placeholder="Repetitions"/>
 			
-			<button>Add a workout</button>
+			<button disabled={isLoading}>
+				{ isLoading ? "Loading" : "Add a workout" }
+			</button>
 			{errMsg ? <div className="error">{errMsg}</div> : ""}
 		</form>
 	)
