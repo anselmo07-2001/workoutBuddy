@@ -26,6 +26,25 @@ exports.getWorkout = async (req,res) => {
 exports.createWorkout = async (req,res) => {
     const { title, load, reps } = req.body
 
+    const errFields = []
+
+    if (!title) {
+        errFields.push("title")
+    }
+
+    if (!load) {
+        errFields.push("load")
+    }
+
+    if (!reps) {
+        errFields.push("reps")
+    }
+
+    if (errFields.length > 0) {
+        return res.status(400).json({error: "Please fill in all the fields", errFields})
+    }
+
+
     try {
         const workout = await WorkoutModel.create({title,load,reps})
         return res.status(201).json(workout)
